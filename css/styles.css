@@ -815,12 +815,13 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 }
 
 /* ==========================================================
-   MOBILE: texto sobre la imagen (overlay), header transparente
+   MOBILE: texto sobre la imagen (overlay oscuro), header transparente
    ========================================================== */
 @media (max-width: 860px) {
-  /* header transparente, burger oscuro sobre el cielo claro */
+  /* header transparente, burger blanco sobre la imagen */
   .header { background: transparent; box-shadow: none; padding: .7rem 0; }
-  .burger span { background: var(--ink); }
+  .burger span { background: var(--white); }
+  .header.is-solid .burger span, .header.menu-open .burger span { background: var(--ink); }
 
   .hero {
     display: flex;
@@ -840,24 +841,23 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
   .hero__bg img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    /* leve corrimiento a la derecha para dejar el edificio libre */
-    object-position: 60% 30%;
+    object-fit: cover;           /* nunca deforma */
+    object-position: 50% 30%;
     animation: none;
     transform: none;
   }
-  /* velo claro: arriba para el header, abajo para que el texto negro lea */
+  /* velo oscuro: arriba para el header, abajo para que el texto blanco lea */
   .hero__overlay {
     display: block;
     position: absolute;
     inset: 0;
     z-index: 1;
     background: linear-gradient(180deg,
-      rgba(255,255,255,.55) 0%,
-      rgba(255,255,255,0) 20%,
-      rgba(255,255,255,0) 44%,
-      rgba(255,255,255,.72) 70%,
-      rgba(255,255,255,.90) 100%);
+      rgba(0,0,0,.34) 0%,
+      rgba(0,0,0,0) 24%,
+      rgba(0,0,0,0) 42%,
+      rgba(0,0,0,.55) 70%,
+      rgba(0,0,0,.82) 100%);
   }
   .hero__scroll { display: none; }
 
@@ -867,20 +867,21 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
     width: 100%;
     padding: 0 6% 2.2rem;
   }
-  .hero__avit--blanco, .hero__logo-inline--blanco { display: none; }
-  .hero__avit--teal { display: block; height: 30px; }
-  .hero__logo-inline--teal { display: block; height: 48px; }
+  /* logos y texto en blanco sobre el velo oscuro */
+  .hero__avit--teal, .hero__logo-inline--teal { display: none; }
+  .hero__avit--blanco { display: block; height: 30px; }
+  .hero__logo-inline--blanco { display: block; height: 48px; }
 
   /* espaciados iguales: AVIT -> texto -> logo Foquier */
-  .hero__title { margin-top: 16px; color: var(--ink); font-size: 1.4rem; font-weight: 700; opacity: 1; animation: none; }
-  .hero__title strong { color: #111; }            /* Av. Italia en negro */
+  .hero__title { margin-top: 16px; color: var(--white); font-size: 1.4rem; font-weight: 700; opacity: 1; animation: none; }
+  .hero__title strong { color: var(--white); }
   .hero__logo-inline { margin-top: 16px; }
   .hero__avit, .hero__ctas { opacity: 1; animation: none; }
 
-  /* botones escalados a la jerarquia de los logos */
+  /* botones sobre fondo oscuro */
   .hero__ctas { margin-top: 1.5rem; gap: .7rem; }
   .hero__ctas .btn { padding: .65rem 1.3rem; font-size: .82rem; width: auto; }
-  .hero__ctas .btn--ghost { border-color: var(--teal); color: var(--teal); }
-  .hero__ctas .btn--ghost:hover { background: var(--teal); color: var(--white); }
+  .hero__ctas .btn--ghost { border-color: var(--white); color: var(--white); }
+  .hero__ctas .btn--ghost:hover { background: var(--white); color: var(--teal); }
   .band__ctas .btn { padding: .7rem 1.4rem; font-size: .85rem; }
 }
