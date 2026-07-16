@@ -80,12 +80,14 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 .header__logo .logo-color { display: none; }
 
 .header.is-solid {
-  background: var(--white);
-  padding: .65rem 0;
-  box-shadow: 0 6px 24px rgba(0, 40, 37, .08);
+  background: transparent;
+  padding: .8rem 0;
+  box-shadow: none;
 }
 .header.is-solid .logo-blanco { display: none; }
 .header.is-solid .logo-color { display: block; }
+/* links legibles cuando el header transparente pasa sobre secciones claras */
+.header.is-solid .nav__link { text-shadow: none; }
 
 /* --- Nav --- */
 .nav { display: flex; align-items: center; gap: 1.6rem; }
@@ -105,6 +107,8 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 .header.is-solid .nav__link { color: var(--ink); }
 .nav__link:hover { color: var(--teal); }
 .header:not(.is-solid) .nav__link:hover { color: rgba(255,255,255,.75); }
+/* sombra sutil para legibilidad de links blancos sobre el header transparente */
+.header:not(.is-solid) .nav__link { text-shadow: 0 1px 10px rgba(0, 0, 0, .28); }
 
 .chev {
   width: 7px; height: 7px;
@@ -811,49 +815,67 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 }
 
 /* ==========================================================
-   MOBILE: imagen arriba + contenido sobre blanco
+   MOBILE: texto sobre la imagen (overlay), header transparente
    ========================================================== */
 @media (max-width: 860px) {
-  /* header siempre solido en mobile */
-  .header {
-    background: var(--white);
-    padding: .6rem 0;
-    box-shadow: 0 6px 24px rgba(0, 40, 37, .08);
-  }
+  /* header transparente, burger oscuro sobre el cielo claro */
+  .header { background: transparent; box-shadow: none; padding: .7rem 0; }
   .burger span { background: var(--ink); }
 
   .hero {
-    display: block;
-    min-height: auto;
-    background: var(--white);
-    padding: 58px 0 2.4rem;
+    display: flex;
+    align-items: flex-end;
+    min-height: 90svh;
+    padding: 0;
+    background: none;
+    overflow: hidden;
   }
   .hero__bg {
-    position: static;
-    inset: auto;
+    position: absolute;
+    inset: 0;
     will-change: auto;
     transform: none !important;
+    z-index: 0;
   }
   .hero__bg img {
     width: 100%;
-    height: auto;
-    object-fit: contain;
+    height: 100%;
+    object-fit: cover;
+    /* leve corrimiento a la derecha para dejar el edificio libre */
+    object-position: 60% 30%;
     animation: none;
     transform: none;
   }
-  .hero__overlay { display: none; }
+  /* velo claro: arriba para el header, abajo para que el texto negro lea */
+  .hero__overlay {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,.55) 0%,
+      rgba(255,255,255,0) 20%,
+      rgba(255,255,255,0) 44%,
+      rgba(255,255,255,.72) 70%,
+      rgba(255,255,255,.90) 100%);
+  }
   .hero__scroll { display: none; }
 
-  /* contenido sobre blanco, colores de marca */
-  .hero__content { padding-top: 1.5rem; }
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 0 6% 2.2rem;
+  }
   .hero__avit--blanco, .hero__logo-inline--blanco { display: none; }
   .hero__avit--teal { display: block; height: 30px; }
   .hero__logo-inline--teal { display: block; height: 48px; }
 
   /* espaciados iguales: AVIT -> texto -> logo Foquier */
-  .hero__title { margin-top: 16px; color: var(--ink); font-size: 1.4rem; font-weight: 600; }
-  .hero__title strong { color: var(--teal); }
+  .hero__title { margin-top: 16px; color: var(--ink); font-size: 1.4rem; font-weight: 700; opacity: 1; animation: none; }
+  .hero__title strong { color: #111; }            /* Av. Italia en negro */
   .hero__logo-inline { margin-top: 16px; }
+  .hero__avit, .hero__ctas { opacity: 1; animation: none; }
 
   /* botones escalados a la jerarquia de los logos */
   .hero__ctas { margin-top: 1.5rem; gap: .7rem; }
