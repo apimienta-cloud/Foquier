@@ -138,6 +138,12 @@
   const lbImg = document.getElementById("lbImg");
   const lbCaption = document.getElementById("lbCaption");
   const lbArrows = [document.getElementById("lbPrev"), document.getElementById("lbNext")];
+  const lbInfo = document.getElementById("lbInfo");
+  const PAGO_INFO =
+    '<h4>Formas de pago y condiciones</h4>' +
+    '<p><strong>Forma de pago en obra:</strong> 30% contado, 60% en cuotas trimestrales durante la obra y 10% a la entrega de la unidad.</p>' +
+    '<p><strong>Comisión inmobiliaria:</strong> 3% + IVA, pagadera al momento del compromiso.</p>' +
+    '<p><strong>Gastos de ocupación:</strong> 4%, correspondientes a gastos de conexiones y alojamiento, reglamento de copropiedad y plano de mensura.</p>';
   let lbList = [];
   let lbIndex = 0;
 
@@ -146,7 +152,16 @@
     const item = lbList[lbIndex];
     lbImg.src = item.src;
     lbImg.alt = item.caption || "";
-    lbCaption.textContent = item.caption || "";
+    if (item.priceId) {
+      const parts = (item.caption || "").split(" · ");
+      lbCaption.innerHTML = '<a class="lb-price-link" href="#' + item.priceId + '">' + parts[0] + '</a>' + (parts[1] ? ' · ' + parts[1] : '');
+    } else {
+      lbCaption.textContent = item.caption || "";
+    }
+    if (lbInfo) {
+      lbInfo.innerHTML = (item.info || "") + (item.priceId ? '<a class="lb-price-link lb-price-link--btn" href="#' + item.priceId + '">Ver esta unidad en la lista de precios →</a>' : "");
+      lbInfo.hidden = !item.info;
+    }
     lbArrows.forEach((a) => (a.style.display = lbList.length > 1 ? "" : "none"));
     lightbox.classList.add("open");
     lightbox.setAttribute("aria-hidden", "false");
@@ -178,15 +193,45 @@
 
   // Documentos (plantas y precios): navegacion dentro de cada grilla
   document.querySelectorAll(".doc-grid").forEach((grid) => {
+    const isTipo = grid.classList.contains("doc-grid--tipologia");
     const items = Array.from(grid.querySelectorAll(".doc-item"));
-    const list = items.map((b) => ({ src: b.dataset.full, caption: b.dataset.caption || "" }));
+    const list = items.map((b) => ({ src: b.dataset.full, caption: b.dataset.caption || "", info: isTipo ? PAGO_INFO : "", priceId: b.dataset.price || "" }));
     items.forEach((b, i) => b.addEventListener("click", () => openList(list, i)));
   });
+
+  /* --- Precios: clic en la unidad abre su tipología (plano + info de pago) --- */
+  document.querySelectorAll(".price-unit").forEach((b) => {
+    b.addEventListener("click", () => {
+      openList([{ src: b.dataset.plan, caption: b.dataset.caption, info: PAGO_INFO, priceId: b.dataset.price }], 0);
+    });
+  });
+
+  /* --- Ir a una fila de la lista de precios (desde una tipología) --- */
+  const goToPrice = (id) => {
+    closeLightbox();
+    const row = document.getElementById(id);
+    if (!row) return;
+    const acc = row.closest(".accordion");
+    if (acc && !acc.classList.contains("open")) {
+      acc.classList.add("open");
+      const h = acc.querySelector(".accordion__head");
+      if (h) h.setAttribute("aria-expanded", "true");
+    }
+    setTimeout(() => {
+      row.scrollIntoView({ behavior: "smooth", block: "center" });
+      row.classList.add("price-row--hl");
+      setTimeout(() => row.classList.remove("price-row--hl"), 2400);
+    }, 340);
+  };
 
   document.getElementById("lbClose").addEventListener("click", closeLightbox);
   lbArrows[0].addEventListener("click", (e) => { e.stopPropagation(); showAt(lbIndex - 1); });
   lbArrows[1].addEventListener("click", (e) => { e.stopPropagation(); showAt(lbIndex + 1); });
-  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
+  lightbox.addEventListener("click", (e) => {
+    const link = e.target.closest(".lb-price-link");
+    if (link) { e.preventDefault(); goToPrice(link.getAttribute("href").slice(1)); return; }
+    if (e.target === lightbox) closeLightbox();
+  });
   document.addEventListener("keydown", (e) => {
     if (!lightbox.classList.contains("open")) return;
     if (e.key === "Escape") closeLightbox();

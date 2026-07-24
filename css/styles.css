@@ -199,6 +199,7 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 .hero__bg img {
   width: 100%; height: 100%;
   object-fit: cover;
+  object-position: 50% 22%;   /* baja la vista para no cortar el edificio */
   animation: heroZoom 12s var(--ease) forwards;
 }
 @keyframes heroZoom { from { transform: scale(1.12); } to { transform: scale(1); } }
@@ -525,6 +526,8 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 4.5rem 1rem 2rem;
+  overflow-y: auto;
   opacity: 0;
   visibility: hidden;
   transition: opacity .35s var(--ease), visibility .35s;
@@ -542,6 +545,21 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 }
 .lightbox.open .lightbox__figure img { transform: scale(1); }
 .lightbox__figure figcaption { color: var(--white); margin-top: 1rem; font-weight: 700; letter-spacing: .05em; }
+/* panel de info de pago (tipologías) */
+.lightbox__info {
+  max-width: min(680px, 88vw);
+  margin: 1rem auto 0;
+  background: var(--white);
+  color: var(--ink);
+  border-radius: 12px;
+  padding: 1.1rem 1.4rem;
+  text-align: left;
+}
+.lightbox__info h4 { color: var(--teal); font-size: .92rem; font-weight: 800; margin-bottom: .55rem; text-transform: uppercase; letter-spacing: .08em; }
+.lightbox__info p { font-size: .86rem; line-height: 1.5; margin-bottom: .4rem; color: var(--ink-soft); }
+.lightbox__info p:last-child { margin-bottom: 0; }
+.lightbox__info strong { color: var(--ink); font-weight: 700; }
+.lightbox__figure:has(.lightbox__info:not([hidden])) img { max-height: 58vh; }
 .lightbox__close {
   position: absolute;
   top: 20px; right: 28px;
@@ -850,6 +868,96 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
   line-height: 1.35;
 }
 .accordion__download { margin-top: 1.6rem; }
+
+/* ==========================================================
+   LISTA DE PRECIOS (tablas HTML)
+   ========================================================== */
+.price-intro { margin-bottom: 1.8rem; }
+.price-intro__title {
+  color: var(--teal);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+.price-intro__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5rem 2rem;
+}
+.price-intro__grid p { font-size: .9rem; color: var(--ink-soft); margin: 0; }
+.price-intro__grid strong { color: var(--ink); }
+
+.price-floor { margin-top: 1.6rem; }
+.price-floor__title {
+  color: var(--teal);
+  font-size: .8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  margin-bottom: .5rem;
+}
+.price-table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid #e2f2ef; }
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .82rem;
+  min-width: 640px;
+}
+.price-table th {
+  background: var(--mint);
+  color: var(--teal-dark);
+  font-weight: 800;
+  text-align: right;
+  padding: .55rem .7rem;
+  white-space: nowrap;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+.price-table th:first-child, .price-table td:first-child { text-align: left; }
+.price-table td {
+  padding: .5rem .7rem;
+  text-align: right;
+  border-top: 1px solid #eef5f4;
+  white-space: nowrap;
+  color: var(--ink);
+}
+.price-table tbody tr:hover { background: #f6fbfa; }
+.price-u { padding-left: .5rem !important; }
+.price-unit {
+  font-weight: 800;
+  color: var(--teal);
+  font-size: .9rem;
+  padding: .15rem .5rem;
+  border-radius: 6px;
+  transition: background .2s, color .2s;
+  cursor: pointer;
+}
+.price-unit:hover { background: var(--teal); color: var(--white); }
+.price-pre { color: var(--teal-dark); font-weight: 700; }
+.price-res { color: var(--ink-soft); font-style: italic; text-align: center !important; }
+.price-row--hl { animation: priceHl 2.4s var(--ease); }
+@keyframes priceHl {
+  0%, 100% { background: transparent; }
+  15%, 55% { background: #d8f3ee; }
+}
+
+/* links del lightbox hacia la lista de precios */
+.lb-price-link { color: var(--teal); text-decoration: underline; cursor: pointer; }
+.lb-price-link:hover { color: var(--teal-dark); }
+.lb-price-link--btn {
+  display: inline-block;
+  margin-top: .9rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--teal);
+}
+.lb-price-link--btn:hover { text-decoration: underline; }
+
+@media (max-width: 640px) {
+  .price-intro__grid { grid-template-columns: 1fr; }
+}
 
 @media (max-width: 1024px) {
   .doc-grid { grid-template-columns: repeat(3, 1fr); }
