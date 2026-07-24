@@ -205,8 +205,12 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 
 .hero__overlay {
   position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(100deg, rgba(0, 45, 42, .78) 0%, rgba(0, 45, 42, .45) 45%, rgba(0, 45, 42, .15) 100%);
+  /* filtro más liviano: el edificio se ve más claro; sombra en el texto para legibilidad */
+  background: linear-gradient(100deg, rgba(0, 45, 42, .52) 0%, rgba(0, 45, 42, .22) 48%, rgba(0, 45, 42, 0) 100%);
 }
+.hero__content .hero__avit--blanco { filter: drop-shadow(0 2px 14px rgba(0, 25, 23, .45)); }
+.hero__title { text-shadow: 0 2px 20px rgba(0, 25, 23, .5); }
+.hero__logo-inline--blanco { filter: drop-shadow(0 2px 14px rgba(0, 25, 23, .45)); }
 .hero__content { width: min(1180px, 92%); margin-inline: auto; padding-top: 4rem; }
 .hero__avit {
   height: clamp(30px, 4.2vw, 48px); width: auto;
@@ -418,6 +422,30 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 }
 
 .amenities-text { margin-top: clamp(3rem, 6vw, 5rem); align-items: start; }
+
+/* --- Hogar inteligente: fila de iconos --- */
+.tech-icons {
+  display: flex;
+  gap: 1.4rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.tech-icon {
+  flex: 1 1 130px;
+  text-align: center;
+}
+.tech-icon img {
+  width: 66px;
+  height: 66px;
+  margin: 0 auto .55rem;
+}
+.tech-icon span {
+  display: block;
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+}
 .amenities-text p { margin-top: 1rem; }
 
 /* --- Mapa --- */
