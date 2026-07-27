@@ -570,12 +570,40 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
   padding: .8rem 1.3rem;
   text-align: left;
 }
-.lightbox__info h4 { color: var(--teal); font-size: .78rem; font-weight: 800; margin-bottom: .5rem; text-transform: uppercase; letter-spacing: .08em; }
+.lightbox__info-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .6rem;
+  color: var(--teal);
+  font-size: .78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  text-align: left;
+}
+.lightbox__info-chev {
+  flex: 0 0 auto;
+  width: 8px; height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform .35s var(--ease);
+}
+.lightbox__info-toggle[aria-expanded="true"] .lightbox__info-chev { transform: rotate(135deg); }
+/* En desktop el detalle siempre esta expandido: el boton solo actua como titulo */
+.lightbox__info-collapse { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .4s var(--ease); margin-top: .5rem; }
+.lightbox__info-collapse-inner { min-height: 0; overflow: hidden; }
 .lightbox__info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .3rem 1.6rem; }
 .lightbox__info p { font-size: .78rem; line-height: 1.4; margin-bottom: 0; color: var(--ink-soft); }
 .lightbox__info strong { color: var(--ink); font-weight: 700; }
 .lightbox__figure:has(.lightbox__info:not([hidden])) img { max-height: 66vh; }
 @media (max-width: 860px) {
+  /* En mobile el plano manda: el detalle de pago arranca cerrado y se despliega al tocar el titulo */
+  .lightbox__info-toggle { cursor: pointer; }
+  .lightbox__info-collapse { grid-template-rows: 0fr; }
+  .lightbox__info-collapse.open { grid-template-rows: 1fr; }
   .lightbox__info-grid { grid-template-columns: 1fr; gap: 0; }
   .lightbox__info p { margin-bottom: .3rem; }
   .lightbox__info p:last-child { margin-bottom: 0; }
@@ -817,7 +845,7 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
   .lightbox { padding: 3.5rem .6rem 1.5rem; }
   .lightbox__figure:has(.lightbox__info:not([hidden])) img { max-height: 66vh; }
   .lightbox__info { padding: .8rem 1rem; margin-top: .7rem; }
-  .lightbox__info h4 { font-size: .74rem; margin-bottom: .35rem; }
+  .lightbox__info-toggle { font-size: .74rem; }
   .lightbox__info p { font-size: .74rem; line-height: 1.35; margin-bottom: .3rem; }
   .lb-price-link--btn { font-size: .78rem; margin-top: .6rem; }
   .lightbox__figure figcaption { margin-top: .6rem; font-size: .82rem; }
