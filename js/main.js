@@ -137,6 +137,7 @@
   const lightbox = document.getElementById("lightbox");
   const lbImg = document.getElementById("lbImg");
   const lbCaption = document.getElementById("lbCaption");
+  const lbAreas = document.getElementById("lbAreas");
   const lbArrows = [document.getElementById("lbPrev"), document.getElementById("lbNext")];
   const lbInfo = document.getElementById("lbInfo");
   const PAGO_INFO =
@@ -152,12 +153,34 @@
     const item = lbList[lbIndex];
     lbImg.src = item.src;
     lbImg.alt = item.caption || "";
-    if (item.priceId) {
+
+    // Cabecera + medidas (arriba del plano, como en el ejemplo de planta vertical)
+    if (item.priceId && lbAreas) {
+      const row = document.getElementById(item.priceId);
       const parts = (item.caption || "").split(" · ");
-      lbCaption.innerHTML = '<a class="lb-price-link" href="#' + item.priceId + '">' + parts[0] + '</a>' + (parts[1] ? ' · ' + parts[1] : '');
+      let html = "<h3>" + (parts[0] || "") + (parts[1] ? " <span>· " + parts[1] + "</span>" : "") + "</h3>";
+      if (row) {
+        const cells = row.querySelectorAll("td");
+        const propia = cells[2] ? cells[2].textContent.trim() : "";
+        const terraza = cells[3] ? cells[3].textContent.trim() : "";
+        const comun = cells[4] ? cells[4].textContent.trim() : "";
+        const total = cells[5] ? cells[5].textContent.trim() : "";
+        html +=
+          '<div class="lightbox__areas-grid">' +
+          "<div><span>Habitable</span><strong>" + propia + " m²</strong></div>" +
+          "<div><span>Terraza</span><strong>" + terraza + " m²</strong></div>" +
+          "<div><span>Común</span><strong>" + comun + " m²</strong></div>" +
+          "<div><span>Total</span><strong>" + total + " m²</strong></div>" +
+          "</div>";
+      }
+      lbAreas.innerHTML = html;
+      lbAreas.hidden = false;
+      lbCaption.textContent = "";
     } else {
+      if (lbAreas) { lbAreas.innerHTML = ""; lbAreas.hidden = true; }
       lbCaption.textContent = item.caption || "";
     }
+
     if (lbInfo) {
       lbInfo.innerHTML = (item.info || "") + (item.priceId ? '<a class="lb-price-link lb-price-link--btn" href="#' + item.priceId + '">Ver esta unidad en la lista de precios →</a>' : "");
       lbInfo.hidden = !item.info;
