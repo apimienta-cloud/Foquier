@@ -769,14 +769,29 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
   .btn--nav { margin-top: 1.8rem; text-align: center; width: 100%; padding: 1rem; font-size: 1rem; }
 
   .grid-2 { grid-template-columns: 1fr; }
-  .grid-2--media-first figure { order: -1; }
+  /* Mobile: el título siempre va antes que la imagen/mapa, sin importar el orden en desktop */
+  .grid-2 > figure, .grid-2 > .map { order: 1; }
   /* Ubicación mobile: título arriba, mapa debajo, sin tanto espacio */
   #ubicacion .grid-2 { gap: 1.4rem; }
-  #ubicacion .grid-2 > .reveal { order: -1; }
   #ubicacion .map iframe { height: 300px; }
   .amenities-grid { grid-template-columns: repeat(3, 1fr); gap: .9rem; }
   .footer__inner { grid-template-columns: 1fr; }
   .footer__cols { grid-template-columns: 1fr; }
+
+  /* Hogar inteligente: los 3 iconos siempre en una sola fila, aunque queden mas chicos */
+  .tech-icons { flex-wrap: nowrap; gap: .5rem; }
+  .tech-icon { flex: 1 1 0; min-width: 0; }
+  .tech-icon img { width: 40px; height: 40px; margin-bottom: .35rem; }
+  .tech-icon span { font-size: .68rem; line-height: 1.2; }
+
+  /* Tipologías: el plano es lo mas importante, la info de pago no debe competirle */
+  .lightbox { padding: 3.5rem .6rem 1.5rem; }
+  .lightbox__figure:has(.lightbox__info:not([hidden])) img { max-height: 66vh; }
+  .lightbox__info { padding: .8rem 1rem; margin-top: .7rem; }
+  .lightbox__info h4 { font-size: .74rem; margin-bottom: .35rem; }
+  .lightbox__info p { font-size: .74rem; line-height: 1.35; margin-bottom: .3rem; }
+  .lb-price-link--btn { font-size: .78rem; margin-top: .6rem; }
+  .lightbox__figure figcaption { margin-top: .6rem; font-size: .82rem; }
 }
 
 @media (max-width: 560px) {
