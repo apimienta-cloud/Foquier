@@ -199,10 +199,12 @@
   }));
   galleryItems.forEach((f, i) => f.addEventListener("click", () => openList(galleryList, i)));
 
-  // Amenities (imagen unica)
+  // Amenities (una o varias imagenes, separadas por "|" en data-imgs)
   document.querySelectorAll(".amenity--clickable").forEach((btn) => {
     btn.addEventListener("click", () => {
-      openList([{ src: btn.dataset.img, caption: btn.dataset.caption }], 0);
+      const srcs = btn.dataset.imgs ? btn.dataset.imgs.split("|") : [btn.dataset.img];
+      const list = srcs.map((src) => ({ src, caption: btn.dataset.caption }));
+      openList(list, 0);
     });
   });
 
