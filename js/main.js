@@ -131,13 +131,21 @@
     });
   });
 
+  /* ---------- Lista de precios: un desplegable por piso ---------- */
+  document.querySelectorAll(".price-floor__head").forEach((head) => {
+    head.addEventListener("click", () => {
+      const floor = head.parentElement;
+      const open = floor.classList.toggle("open");
+      head.setAttribute("aria-expanded", open);
+    });
+  });
+
   /* ==========================================================
      LIGHTBOX generico (galeria, amenities y documentos)
      ========================================================== */
   const lightbox = document.getElementById("lightbox");
   const lbImg = document.getElementById("lbImg");
   const lbCaption = document.getElementById("lbCaption");
-  const lbAreas = document.getElementById("lbAreas");
   const lbArrows = [document.getElementById("lbPrev"), document.getElementById("lbNext")];
   const lbInfo = document.getElementById("lbInfo");
   const PAGO_INFO =
@@ -154,31 +162,11 @@
     lbImg.src = item.src;
     lbImg.alt = item.caption || "";
 
-    // Cabecera + medidas (arriba del plano, como en el ejemplo de planta vertical)
-    if (item.priceId && lbAreas) {
-      const row = document.getElementById(item.priceId);
+    if (item.priceId) {
       const parts = (item.caption || "").split(" · ");
       const aptLabel = parts[0] || "";
-      let html = '<h3><a class="lb-price-link lb-price-link--heading" href="#' + item.priceId + '">Precio - ' + aptLabel + "</a></h3>";
-      if (row) {
-        const cells = row.querySelectorAll("td");
-        const propia = cells[2] ? cells[2].textContent.trim() : "";
-        const terraza = cells[3] ? cells[3].textContent.trim() : "";
-        const comun = cells[4] ? cells[4].textContent.trim() : "";
-        const total = cells[5] ? cells[5].textContent.trim() : "";
-        html +=
-          '<div class="lightbox__areas-grid">' +
-          "<div><span>Habitable</span><strong>" + propia + " m²</strong></div>" +
-          "<div><span>Terraza</span><strong>" + terraza + " m²</strong></div>" +
-          "<div><span>Común</span><strong>" + comun + " m²</strong></div>" +
-          "<div><span>Total</span><strong>" + total + " m²</strong></div>" +
-          "</div>";
-      }
-      lbAreas.innerHTML = html;
-      lbAreas.hidden = false;
-      lbCaption.textContent = "";
+      lbCaption.innerHTML = '<a class="lb-price-link" href="#' + item.priceId + '">Precio - ' + aptLabel + "</a>";
     } else {
-      if (lbAreas) { lbAreas.innerHTML = ""; lbAreas.hidden = true; }
       lbCaption.textContent = item.caption || "";
     }
 
@@ -242,6 +230,12 @@
       acc.classList.add("open");
       const h = acc.querySelector(".accordion__head");
       if (h) h.setAttribute("aria-expanded", "true");
+    }
+    const floor = row.closest(".price-floor");
+    if (floor && !floor.classList.contains("open")) {
+      floor.classList.add("open");
+      const fh = floor.querySelector(".price-floor__head");
+      if (fh) fh.setAttribute("aria-expanded", "true");
     }
     setTimeout(() => {
       row.scrollIntoView({ behavior: "smooth", block: "center" });

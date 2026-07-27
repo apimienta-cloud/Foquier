@@ -547,17 +547,6 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 }
 .lightbox.open .lightbox__figure img { transform: scale(1); }
 .lightbox__figure figcaption { color: var(--white); margin-top: 1rem; font-weight: 700; letter-spacing: .05em; }
-/* cabecera + medidas de la tipología (van arriba del plano, como en el ejemplo) */
-.lightbox__areas { max-width: min(680px, 88vw); margin: 0 auto 1.2rem; text-align: left; color: var(--white); }
-.lightbox__areas h3 { font-size: 1.3rem; font-weight: 800; margin: 0 0 .8rem; }
-.lightbox__areas h3 .lb-price-link--heading { color: var(--white); text-decoration: none; }
-.lightbox__areas h3 .lb-price-link--heading:hover { color: var(--mint); text-decoration: underline; }
-.lightbox__areas-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; }
-.lightbox__areas-grid div { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 10px; padding: .6rem .5rem; text-align: center; }
-.lightbox__areas-grid span { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; color: var(--mint); margin-bottom: .25rem; }
-.lightbox__areas-grid strong { display: block; font-size: 1rem; color: var(--white); font-weight: 700; }
-@media (max-width: 640px) { .lightbox__areas-grid { grid-template-columns: repeat(2, 1fr); } }
-.lightbox__figure:has(.lightbox__areas:not([hidden])) img { max-height: 60vh; }
 /* panel de info de pago (tipologías) */
 .lightbox__info {
   max-width: min(680px, 88vw);
@@ -900,15 +889,46 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 .price-intro__grid p { font-size: .9rem; color: var(--ink-soft); margin: 0; }
 .price-intro__grid strong { color: var(--ink); }
 
-.price-floor { margin-top: 1.6rem; }
-.price-floor__title {
-  color: var(--teal);
-  font-size: .8rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .18em;
-  margin-bottom: .5rem;
+/* Cada piso es un mini-desplegable: no se muestran todas las tablas juntas */
+.price-floor {
+  margin-top: 1rem;
+  border: 1px solid #e2f2ef;
+  border-radius: 10px;
+  overflow: hidden;
 }
+.price-floor__head {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: .9rem 1.1rem;
+  font-size: .85rem;
+  font-weight: 800;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  text-align: left;
+  transition: background .3s;
+}
+.price-floor__head:hover { background: #f6fbfa; }
+.price-floor__chev {
+  flex: 0 0 auto;
+  width: 8px; height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform .4s var(--ease);
+}
+.price-floor.open .price-floor__chev { transform: rotate(225deg); }
+.price-floor__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .5s var(--ease);
+}
+.price-floor.open .price-floor__body { grid-template-rows: 1fr; }
+.price-floor__inner { min-height: 0; overflow: hidden; }
+.price-floor .price-table-wrap { border: 0; border-top: 1px solid #e2f2ef; border-radius: 0; }
 .price-table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid #e2f2ef; }
 .price-table {
   width: 100%;
