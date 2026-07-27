@@ -150,9 +150,11 @@
   const lbInfo = document.getElementById("lbInfo");
   const PAGO_INFO =
     '<h4>Formas de pago y condiciones</h4>' +
+    '<div class="lightbox__info-grid">' +
     '<p><strong>Forma de pago en obra:</strong> 30% contado, 60% en cuotas trimestrales durante la obra y 10% a la entrega de la unidad.</p>' +
     '<p><strong>Comisión inmobiliaria:</strong> 3% + IVA, pagadera al momento del compromiso.</p>' +
-    '<p><strong>Gastos de ocupación:</strong> 4%, correspondientes a gastos de conexiones y alojamiento, reglamento de copropiedad y plano de mensura.</p>';
+    '<p><strong>Gastos de ocupación:</strong> 4%, correspondientes a gastos de conexiones y alojamiento, reglamento de copropiedad y plano de mensura.</p>' +
+    '</div>';
   let lbList = [];
   let lbIndex = 0;
 

@@ -547,21 +547,27 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 }
 .lightbox.open .lightbox__figure img { transform: scale(1); }
 .lightbox__figure figcaption { color: var(--white); margin-top: 1rem; font-weight: 700; letter-spacing: .05em; }
-/* panel de info de pago (tipologías) */
+/* panel de info de pago (tipologías): mismo ancho que la hoja del plano de arriba,
+   y en 3 columnas para que ocupe poco alto y no le compita al render */
 .lightbox__info {
-  max-width: min(680px, 88vw);
-  margin: 1rem auto 0;
+  max-width: min(1100px, 88vw);
+  margin: .9rem auto 0;
   background: var(--white);
   color: var(--ink);
   border-radius: 12px;
-  padding: 1.1rem 1.4rem;
+  padding: .8rem 1.3rem;
   text-align: left;
 }
-.lightbox__info h4 { color: var(--teal); font-size: .92rem; font-weight: 800; margin-bottom: .55rem; text-transform: uppercase; letter-spacing: .08em; }
-.lightbox__info p { font-size: .86rem; line-height: 1.5; margin-bottom: .4rem; color: var(--ink-soft); }
-.lightbox__info p:last-child { margin-bottom: 0; }
+.lightbox__info h4 { color: var(--teal); font-size: .78rem; font-weight: 800; margin-bottom: .5rem; text-transform: uppercase; letter-spacing: .08em; }
+.lightbox__info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .3rem 1.6rem; }
+.lightbox__info p { font-size: .78rem; line-height: 1.4; margin-bottom: 0; color: var(--ink-soft); }
 .lightbox__info strong { color: var(--ink); font-weight: 700; }
-.lightbox__figure:has(.lightbox__info:not([hidden])) img { max-height: 58vh; }
+.lightbox__figure:has(.lightbox__info:not([hidden])) img { max-height: 66vh; }
+@media (max-width: 860px) {
+  .lightbox__info-grid { grid-template-columns: 1fr; gap: 0; }
+  .lightbox__info p { margin-bottom: .3rem; }
+  .lightbox__info p:last-child { margin-bottom: 0; }
+}
 .lightbox__close {
   position: absolute;
   top: 20px; right: 28px;
