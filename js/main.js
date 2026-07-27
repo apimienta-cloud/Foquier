@@ -158,7 +158,8 @@
     if (item.priceId && lbAreas) {
       const row = document.getElementById(item.priceId);
       const parts = (item.caption || "").split(" · ");
-      let html = "<h3>" + (parts[0] || "") + (parts[1] ? " <span>· " + parts[1] + "</span>" : "") + "</h3>";
+      const aptLabel = parts[0] || "";
+      let html = '<h3><a class="lb-price-link lb-price-link--heading" href="#' + item.priceId + '">Precio - ' + aptLabel + "</a></h3>";
       if (row) {
         const cells = row.querySelectorAll("td");
         const propia = cells[2] ? cells[2].textContent.trim() : "";
@@ -222,9 +223,11 @@
     items.forEach((b, i) => b.addEventListener("click", () => openList(list, i)));
   });
 
-  /* --- Precios: clic en la unidad abre su tipología (plano + info de pago) --- */
-  document.querySelectorAll(".price-unit").forEach((b) => {
-    b.addEventListener("click", () => {
+  /* --- Precios: clic en cualquier parte de la fila abre su tipología (plano + info de pago) --- */
+  document.querySelectorAll(".price-table tbody tr").forEach((row) => {
+    const b = row.querySelector(".price-unit");
+    if (!b) return;
+    row.addEventListener("click", () => {
       openList([{ src: b.dataset.plan, caption: b.dataset.caption, info: PAGO_INFO, priceId: b.dataset.price }], 0);
     });
   });
