@@ -1046,15 +1046,6 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 }
 .price-unit:hover { background: var(--teal); color: var(--white); }
 .price-pre { color: var(--teal-dark); font-weight: 700; }
-.price-res {
-  background: #8b93a0;
-  color: var(--white);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  font-size: .74rem;
-  text-align: center !important;
-}
 .price-table tbody tr.price-row--reserved { background: #f0f1f2; }
 .price-table tbody tr.price-row--reserved:hover { background: #e6e8ea; }
 .price-row--reserved td { color: var(--ink-soft); }
