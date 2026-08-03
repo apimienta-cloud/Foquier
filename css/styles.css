@@ -1047,6 +1047,24 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 .price-unit:hover { background: var(--teal); color: var(--white); }
 .price-pre { color: var(--teal-dark); font-weight: 700; }
 .price-res { color: var(--ink-soft); font-style: italic; text-align: center !important; }
+.price-row--reserved { background: #fbf6f1; }
+.price-row--reserved:hover { background: #f7eee5; }
+.price-row--reserved td { color: var(--ink-soft); }
+.price-row--reserved .price-unit { color: var(--ink-soft); }
+.price-row--reserved .price-pre { text-decoration: line-through; text-decoration-color: #c99a6b; }
+.price-badge {
+  display: inline-block;
+  margin-left: .5rem;
+  padding: .18rem .55rem;
+  border-radius: 999px;
+  background: #e8a33d;
+  color: var(--white);
+  font-size: .62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  vertical-align: middle;
+}
 .price-row--hl { animation: priceHl 2.4s var(--ease); }
 @keyframes priceHl {
   0%, 100% { background: transparent; }
