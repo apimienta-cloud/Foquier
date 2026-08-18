@@ -1050,7 +1050,7 @@ button { font-family: var(--font); background: none; border: 0; cursor: pointer;
 .price-table tbody tr.price-row--reserved:hover { background: #e6e8ea; }
 .price-row--reserved td { color: var(--ink-soft); }
 .price-row--reserved .price-unit { color: var(--ink-soft); }
-.price-row--reserved .price-pre { text-decoration: line-through; text-decoration-color: #9aa1a8; }
+.price-row--reserved .price-pre { font-style: italic; font-weight: 600; }
 .price-badge {
   display: inline-block;
   margin-left: .5rem;
